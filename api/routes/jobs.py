@@ -17,7 +17,9 @@ def create_job(job: JobCreate):
         "job_id": job_id,
         "status": JobStatus.PENDING,
         "job_type": job.job_type,
-        "payload": job.payload
+        "payload": job.payload,
+        "error": None,
+        "retry_count": 0,
     }
     jobs_db[job_id] = job_data
 

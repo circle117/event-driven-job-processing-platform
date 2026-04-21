@@ -13,17 +13,17 @@ Cloud Services: AWS (SQS, DynamoDB, S3, CloudWatch, Lambda/EC2)
 
 Phase 1: Local implementation
 
-- [ ] Backend implementation with FastAPI
+- [x] Backend implementation with FastAPI
   - [x] `POST /jobs`
   - [x] `GET /jobs/{job_id}`
 - [x] Worker implementation
   - [x] One simple worker function
   - [x] Job status change (pending -> processing -> completed/failed)
   - [x] Async execution
-- [ ] Error handling and idempotency
-  - [ ] No repetitive execution for same job_id
-  - [ ] Error handling
-  - [ ] Retry
+- [x] Error handling and idempotency
+  - [x] No repetitive execution for same job_id
+  - [x] Error handling
+  - [x] Retry
 
 Phase 2: basic AWS services
 
