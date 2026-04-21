@@ -21,3 +21,4 @@ class JobResponse(BaseModel):
     status: JobStatus
     job_type: str
     payload: dict
+    error: str | None = None

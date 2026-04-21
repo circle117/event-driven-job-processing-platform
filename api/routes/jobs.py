@@ -1,5 +1,6 @@
 from fastapi import APIRouter, HTTPException
 from api.models.job import JobStatus, JobCreate, JobResponse
+from worker.worker import run_worker_async
 import uuid
 
 
@@ -19,6 +20,9 @@ def create_job(job: JobCreate):
         "payload": job.payload
     }
     jobs_db[job_id] = job_data
+
+    run_worker_async(job_id, jobs_db)
+
     return job_data
 
 

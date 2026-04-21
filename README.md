@@ -16,10 +16,10 @@ Phase 1: Local implementation
 - [ ] Backend implementation with FastAPI
   - [x] `POST /jobs`
   - [x] `GET /jobs/{job_id}`
-- [ ] Worker implementation
-  - [ ] One simple worker function
-  - [ ] Job status change (pending -> processing -> completed/failed)
-  - [ ] Async execution
+- [x] Worker implementation
+  - [x] One simple worker function
+  - [x] Job status change (pending -> processing -> completed/failed)
+  - [x] Async execution
 - [ ] Error handling and idempotency
   - [ ] No repetitive execution for same job_id
   - [ ] Error handling
