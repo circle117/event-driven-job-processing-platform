@@ -14,8 +14,8 @@ Cloud Services: AWS (SQS, DynamoDB, S3, CloudWatch, Lambda/EC2)
 Phase 1: Local implementation
 
 - [ ] Backend implementation with FastAPI
-  - [ ] `POST /jobs`
-  - [ ] `GET /jobs/{job_id}`
+  - [x] `POST /jobs`
+  - [x] `GET /jobs/{job_id}`
 - [ ] Worker implementation
   - [ ] One simple worker function
   - [ ] Job status change (pending -> processing -> completed/failed)
