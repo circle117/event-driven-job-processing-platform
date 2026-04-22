@@ -27,9 +27,9 @@ Phase 1: Local implementation
 
 Phase 2: basic AWS services
 
-- [ ] DynamoDB
-  - [ ] Create tables
-  - [ ] Replace in-memory storage with DynamoDB
+- [x] DynamoDB
+  - [x] Create tables
+  - [x] Replace in-memory storage with DynamoDB
 - [ ] SQS
 - [ ] DLQ + Retry
 

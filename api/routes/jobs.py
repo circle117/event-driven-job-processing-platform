@@ -1,14 +1,12 @@
 from fastapi import APIRouter, HTTPException
-from api.models.job import JobStatus, JobCreate, JobResponse
-from worker.worker import run_worker_async
 import uuid
+
+from api.models.job import JobStatus, JobCreate, JobResponse
+from services import database
+from worker.worker import run_worker_async
 
 
 router = APIRouter()
-
-# TODO: temporary storage, use DynamoDB later
-jobs_db: dict = {}
-
 
 @router.post("", response_model=JobResponse, status_code=201)
 def create_job(job: JobCreate):
@@ -21,16 +19,14 @@ def create_job(job: JobCreate):
         "error": None,
         "retry_count": 0,
     }
-    jobs_db[job_id] = job_data
-
-    run_worker_async(job_id, jobs_db)
+    database.create_job(job_data)
+    run_worker_async(job_id)
 
     return job_data
 
-
 @router.get("/{job_id}", response_model=JobResponse)
 def get_job(job_id: str):
-    job = jobs_db.get(job_id)
+    job = database.get_job(job_id)
     if not job:
         raise HTTPException(status_code=404, detail="Job not found")
     return job
