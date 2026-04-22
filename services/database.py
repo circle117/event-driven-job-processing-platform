@@ -28,3 +28,9 @@ def update_job(job_id: str, updates: dict):
         ExpressionAttributeValues=values,
         ExpressionAttributeNames=names,
     )
+
+def delete_job(job_id: str):
+    """
+    delete job in database, only used for testing
+    """
+    table.delete_item(Key={"job_id": job_id})
