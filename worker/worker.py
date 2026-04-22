@@ -23,7 +23,7 @@ def process_job(job_id: str):
     time.sleep(random.uniform(2, 4))
 
     # mimic failure
-    if random.random() < 0.8:
+    if random.random() < 0.3:
         retry_count = job["retry_count"] + 1
 
         if retry_count < MAX_RETRIES:
