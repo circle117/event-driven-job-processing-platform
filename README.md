@@ -30,7 +30,7 @@ Phase 2: basic AWS services
 - [x] DynamoDB
   - [x] Create tables
   - [x] Replace in-memory storage with DynamoDB
-- [ ] SQS
+- [x] SQS
 - [ ] DLQ + Retry
 
 Phase 3: Observability + S3

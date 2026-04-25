@@ -2,7 +2,7 @@ import pytest
 
 from api.models.job import JobStatus
 from conftest import TEST_JOB_ID
-from services.database import get_job, update_job, delete_job
+from services.database import get_job, update_job
 
 
 def test_create_and_get_job():

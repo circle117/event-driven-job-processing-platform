@@ -2,7 +2,7 @@ import sys
 import os
 
 import pytest
-from unittest.mock import patch
+from unittest import mock
 
 from api.models.job import JobStatus
 from services.database import create_job, delete_job
@@ -27,5 +27,10 @@ def setup_job():
 
 @pytest.fixture
 def no_sleep():
-    with patch("worker.worker.time.sleep"):
+    with mock.patch("worker.worker.time.sleep"):
         yield
+
+@pytest.fixture
+def mock_sqs():
+    with mock.patch("services.queue.sqs") as mock_sqs:
+        yield mock_sqs

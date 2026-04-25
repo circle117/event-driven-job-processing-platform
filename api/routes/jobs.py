@@ -2,8 +2,7 @@ from fastapi import APIRouter, HTTPException
 import uuid
 
 from api.models.job import JobStatus, JobCreate, JobResponse
-from services import database
-from worker.worker import run_worker_async
+from services import database, queue
 
 
 router = APIRouter()
@@ -20,8 +19,8 @@ def create_job(job: JobCreate):
         "retry_count": 0,
     }
     database.create_job(job_data)
-    run_worker_async(job_id)
-
+    queue.send_job(job_id)
+    
     return job_data
 
 @router.get("/{job_id}", response_model=JobResponse)

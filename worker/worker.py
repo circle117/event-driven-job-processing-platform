@@ -2,7 +2,7 @@ import random
 import time
 import threading
 from api.models.job import JobStatus
-from services import database
+from services import database, queue
 
 MAX_RETRIES = 3
 
@@ -33,10 +33,7 @@ def process_job(job_id: str):
                 "retry_count": retry_count,
                 "error": f"Failed, retrying ({retry_count}/{MAX_RETRIES})",
             })
-
-            # exponential backoff
-            time.sleep(int(2**retry_count))
-            process_job(job_id)
+            queue.send_job(job_id)
         else:
             database.update_job(job_id, {
                 "status": JobStatus.FAILED,
@@ -51,10 +48,12 @@ def process_job(job_id: str):
     })
 
 
-def run_worker_async(job_id: str):
-    """
-    start a thread to run the job async
-    """
-    thread = threading.Thread(target=process_job, args=(job_id,))
-    thread.daemon = True
-    thread.start()
+def run_worker():
+    while True:
+        messages = queue.receive_jobs()
+        for message in messages:
+            job_id = message["Body"]
+            receipt_handle = message["ReceiptHandle"]
+            print(f"Processing job: {job_id}")
+            process_job(job_id)
+            queue.delete_job_message(receipt_handle)
