@@ -24,23 +24,9 @@ def process_job(job_id: str):
 
     # mimic failure
     if random.random() < 0.3:
-        retry_count = job["retry_count"] + 1
-
-        if retry_count < MAX_RETRIES:
-            # set the status back to pending
-            database.update_job(job_id, {
-                "status": JobStatus.PENDING,
-                "retry_count": retry_count,
-                "error": f"Failed, retrying ({retry_count}/{MAX_RETRIES})",
-            })
-            queue.send_job(job_id)
-        else:
-            database.update_job(job_id, {
-                "status": JobStatus.FAILED,
-                "retry_count": retry_count,
-                "error": f"Failed after {MAX_RETRIES} retries",
-            })
-        return
+        database.update_job(job_id, {"status": JobStatus.FAILED,
+                                     "error": "Random failure"})
+        raise Exception("Random failure")
     
     # update the status to completed
     database.update_job(job_id, {
@@ -54,6 +40,9 @@ def run_worker():
         for message in messages:
             job_id = message["Body"]
             receipt_handle = message["ReceiptHandle"]
-            print(f"Processing job: {job_id}")
-            process_job(job_id)
-            queue.delete_job_message(receipt_handle)
+            try:
+                print(f"Processing job: {job_id}")
+                process_job(job_id)
+                queue.delete_job_message(receipt_handle)
+            except Exception as e:
+                print(f"Error processing job {job_id}: {e}")

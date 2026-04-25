@@ -1,3 +1,4 @@
+import pytest
 from unittest import mock
 
 from api.models.job import JobStatus
@@ -21,13 +22,10 @@ def test_idempotency(no_sleep):
 def test_retry(no_sleep, mock_sqs):
     # process failed
     with mock.patch("worker.worker.random.random", return_value=0):
-        process_job(TEST_JOB_ID)
+        with pytest.raises(Exception, match="Random failure"):
+            process_job(TEST_JOB_ID)
     
     job = get_job(TEST_JOB_ID)
-    assert job["retry_count"] == 1
-    assert job["status"] == JobStatus.PENDING
-    assert job["error"] == f"Failed, retrying (1/{MAX_RETRIES})"
-    mock_sqs.send_message.assert_called_once_with(
-        QueueUrl=mock.ANY,
-        MessageBody=TEST_JOB_ID)
+    assert job["status"] == JobStatus.FAILED
+    assert job["error"] == "Random failure"
     

@@ -2,7 +2,9 @@ import boto3
 from boto3.dynamodb.conditions import Key
 from decimal import Decimal
 
-dynamodb = boto3.resource("dynamodb", region_name="us-east-1")
+from config import AWS_REGION
+
+dynamodb = boto3.resource("dynamodb", region_name=AWS_REGION)
 table = dynamodb.Table("jobs")
 
 def create_job(job_data: dict):
