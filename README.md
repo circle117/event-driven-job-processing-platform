@@ -33,7 +33,7 @@ Phase 2: basic AWS services
 - [x] SQS
   - [x] Add SQS
 - [x] DLQ + Retry
-  - [x]  Let SQS handle retry
+  - [x] Let SQS handle retry
   - [ ] Exponential backoff
 
 Phase 3: Observability + S3
@@ -47,3 +47,7 @@ Phase 4: Deployment (Lambda or EC2)
 - [ ] Deployment
 - [ ] IAM Permissions
 - [ ] Test
+
+## Note
+
+To ensure idempotency, the SQS Visibility timeout must be longer than the maximum job processing time. If processing time is unpredictable or unbounded, conditional writes and a timestamp should be used instead.

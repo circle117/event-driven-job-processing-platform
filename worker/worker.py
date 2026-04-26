@@ -13,7 +13,7 @@ def process_job(job_id: str):
     job = database.get_job(job_id)
 
     # skip if it is in process or completed
-    if job["status"] in (JobStatus.PROCESSING, JobStatus.COMPLETED):
+    if job["status"] == JobStatus.COMPLETED:
         return
 
     # update the status to processing
