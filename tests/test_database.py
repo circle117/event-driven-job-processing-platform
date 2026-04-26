@@ -1,8 +1,9 @@
+import botocore
 import pytest
 
 from api.models.job import JobStatus
 from conftest import TEST_JOB_ID
-from services.database import get_job, update_job
+from services.database import get_job, update_job, create_job
 
 
 def test_create_and_get_job():
@@ -11,6 +12,18 @@ def test_create_and_get_job():
     assert job["job_id"] == TEST_JOB_ID
     assert job["status"] == JobStatus.PENDING
     assert job["retry_count"] == 0
+
+def test_create_one_job_twice():
+    with pytest.raises(botocore.exceptions.ClientError) as exc_info:
+        create_job({
+            "job_id": TEST_JOB_ID,
+            "status": JobStatus.PENDING,
+            "job_type": "test",
+            "payload": {"key1": "value"},
+            "retry_count": 0,
+            "error": None,
+        })
+    assert exc_info.value.response["Error"]["Code"] == "ConditionalCheckFailedException"
 
 def test_get_nonexistent_job():
     job = get_job("nonexistent-id")

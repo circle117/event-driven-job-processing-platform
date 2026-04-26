@@ -1,6 +1,5 @@
 import random
 import time
-import threading
 from api.models.job import JobStatus
 from services import database, queue
 

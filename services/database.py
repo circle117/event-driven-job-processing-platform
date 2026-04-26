@@ -1,5 +1,4 @@
 import boto3
-from boto3.dynamodb.conditions import Key
 from decimal import Decimal
 
 from config import AWS_REGION
@@ -8,7 +7,10 @@ dynamodb = boto3.resource("dynamodb", region_name=AWS_REGION)
 table = dynamodb.Table("jobs")
 
 def create_job(job_data: dict):
-    table.put_item(Item=job_data)
+    table.put_item(
+        Item=job_data,
+        ConditionExpression="attribute_not_exists(job_id)"
+    )
 
 def get_job(job_id: str) -> dict | None:
     response = table.get_item(Key={"job_id": job_id})
