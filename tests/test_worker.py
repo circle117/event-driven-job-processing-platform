@@ -2,7 +2,7 @@ import pytest
 from unittest import mock
 
 from api.models.job import JobStatus
-from conftest import BASE_URL, TEST_JOB_ID
+from constants import TEST_JOB_ID
 from services.database import get_job, update_job
 from worker.worker import process_job, MAX_RETRIES
 

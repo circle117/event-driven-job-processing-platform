@@ -2,7 +2,7 @@ import pytest
 import requests
 import time
 
-from conftest import BASE_URL
+from constants import BASE_URL
 from api.models.job import JobStatus
 
 @pytest.mark.skip()

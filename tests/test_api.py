@@ -1,6 +1,5 @@
-import pytest
 import requests
-from conftest import BASE_URL
+from constants import BASE_URL
 from api.models.job import JobStatus
 
 def test_create_job():

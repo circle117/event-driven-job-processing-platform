@@ -2,7 +2,7 @@ import pytest
 from unittest import mock
 from services.queue import send_job, receive_jobs, delete_job_message, WAIT_TIME_SECONDS
 
-from conftest import TEST_JOB_ID
+from constants import TEST_JOB_ID
     
 def test_send_job(mock_sqs):
     send_job(TEST_JOB_ID)

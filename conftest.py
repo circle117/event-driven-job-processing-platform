@@ -6,11 +6,9 @@ from unittest import mock
 
 from api.models.job import JobStatus
 from services.database import create_job, delete_job
+from tests.constants import TEST_JOB_ID
 
 sys.path.insert(0, os.path.dirname(__file__))
-
-BASE_URL = "http://localhost:8000"
-TEST_JOB_ID = "test-job-123"
 
 @pytest.fixture(autouse=True)
 def setup_job():

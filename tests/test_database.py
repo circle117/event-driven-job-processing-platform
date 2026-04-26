@@ -2,7 +2,7 @@ import botocore
 import pytest
 
 from api.models.job import JobStatus
-from conftest import TEST_JOB_ID
+from constants import TEST_JOB_ID
 from services.database import get_job, update_job, create_job
 
 
