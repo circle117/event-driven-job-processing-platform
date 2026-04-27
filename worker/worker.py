@@ -39,9 +39,12 @@ def run_worker():
         for message in messages:
             job_id = message["Body"]
             receipt_handle = message["ReceiptHandle"]
+            receive_count = int(message["Attributes"]["ApproximateReceiveCount"])
             try:
                 print(f"Processing job: {job_id}")
                 process_job(job_id)
                 queue.delete_job_message(receipt_handle)
             except Exception as e:
                 print(f"Error processing job {job_id}: {e}")
+                backoff = min(2**receive_count, 300)
+                queue.change_message_visibility(receipt_handle, backoff)

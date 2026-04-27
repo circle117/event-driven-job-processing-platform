@@ -14,8 +14,8 @@ def test_send_job(mock_sqs):
 def test_receive_jobs(mock_sqs):
     mock_sqs.receive_message.return_value = {
         "Messages": [
-            {"MessageId": "1", "Body": TEST_JOB_ID, "ReceiptHandle": "handle-1"},
-            {"MessageId": "2", "Body": "other-job", "ReceiptHandle": "handle-2"},
+            {"MessageId": "1", "Body": TEST_JOB_ID, "ReceiptHandle": "handle-1", "Attributes": {"ApproximateReceiveCount": "1"}},
+            {"MessageId": "2", "Body": "other-job", "ReceiptHandle": "handle-2", "Attributes": {"ApproximateReceiveCount": "2"}},
         ]
     }
 
@@ -26,6 +26,7 @@ def test_receive_jobs(mock_sqs):
         QueueUrl=mock.ANY,
         MaxNumberOfMessages=10,
         WaitTimeSeconds=WAIT_TIME_SECONDS,
+        AttributeNames=["ApproximateReceiveCount"],
     )
 
 def test_receive_jobs_empty(mock_sqs):

@@ -16,6 +16,7 @@ def receive_jobs(max_messages: int = 10) -> list:
         QueueUrl=SQS_QUEUE_URL,
         MaxNumberOfMessages = max_messages,
         WaitTimeSeconds=WAIT_TIME_SECONDS,
+        AttributeNames=["ApproximateReceiveCount"],
     )
     return response.get("Messages", [])
 
@@ -23,4 +24,11 @@ def delete_job_message(receipt_handle: str):
     sqs.delete_message(
         QueueUrl=SQS_QUEUE_URL,
         ReceiptHandle=receipt_handle,
+    )
+
+def change_message_visibility(receipt_handle: str, timeout: int):
+    sqs.change_message_visibility(
+        QueueUrl=SQS_QUEUE_URL,
+        ReceiptHandle=receipt_handle,
+        VisibilityTimeout=timeout,
     )
