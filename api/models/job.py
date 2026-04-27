@@ -22,4 +22,3 @@ class JobResponse(BaseModel):
     job_type: str
     payload: dict
     error: str | None = None
-    retry_count: int = 0

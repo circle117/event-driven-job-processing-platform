@@ -16,7 +16,6 @@ def create_job(job: JobCreate):
         "job_type": job.job_type,
         "payload": job.payload,
         "error": None,
-        "retry_count": 0,
     }
     database.create_job(job_data)
     queue.send_job(job_id)
