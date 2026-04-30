@@ -34,7 +34,7 @@ Phase 2: basic AWS services
   - [x] Add SQS
 - [x] DLQ + Retry
   - [x] Let SQS handle retry
-  - [ ] Exponential backoff
+  - [x] Exponential backoff
 
 Phase 3: Observability + S3
 
