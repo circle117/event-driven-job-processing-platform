@@ -1,6 +1,5 @@
 from fastapi.testclient import TestClient
 import pytest
-import requests
 from unittest import mock
 
 from api.models.job import JobStatus
@@ -18,7 +17,7 @@ def mock_db():
     with mock.patch("services.database.table") as mock_db:
         yield mock_db
 
-def test_create_job(mock_db):
+def test_create_job(mock_db, mock_sqs):
     response = client.post(f"{BASE_URL}/jobs", json={
         "job_type": "test",
         "payload": {"key": "value"}
@@ -37,6 +36,7 @@ def test_create_job(mock_db):
         },
         ConditionExpression="attribute_not_exists(job_id)",
     )
+    mock_sqs.send_message.assert_called_once()
 
 def test_get_job(mock_db):
     response = client.get(f"{BASE_URL}/jobs/{TEST_JOB_ID}")

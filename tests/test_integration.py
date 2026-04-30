@@ -5,7 +5,6 @@ import time
 from constants import BASE_URL
 from api.models.job import JobStatus
 
-@pytest.mark.skip()
 def test_job_lifecycle():
     response = requests.post(f"{BASE_URL}/jobs", json={
         "job_type": "test",
@@ -22,14 +21,13 @@ def test_job_lifecycle():
         time.sleep(2)
         response = requests.get(f"{BASE_URL}/jobs/{job_id}")
         job = response.json()
-        print(f"status: {job['status']}, retry_count: {job['retry_count']}")
+        print(f"status: {job['status']}")
         if job["status"] in (JobStatus.COMPLETED, JobStatus.FAILED):
             final_status = job["status"]
             break
     
     assert final_status in ("completed", "failed"), "Job did not complete in time"
 
-@pytest.mark.skip()
 def test_multiple_jobs():
     """
     post multiple jobs
