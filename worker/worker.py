@@ -5,7 +5,7 @@ from logger import get_logger
 from services import database, queue
 
 MAX_RETRIES = 3
-logger = get_logger(__name__)
+logger = get_logger(__name__, "worker")
 
 def process_job(job_id: str):
     """

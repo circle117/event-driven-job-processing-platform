@@ -7,7 +7,7 @@ from services import database, queue
 
 
 router = APIRouter()
-logger = get_logger(__name__)
+logger = get_logger(__name__, "api")
 
 @router.post("", response_model=JobResponse, status_code=201)
 def create_job(job: JobCreate):

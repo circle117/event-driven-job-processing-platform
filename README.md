@@ -40,7 +40,7 @@ Phase 3: Observability + S3
 
 - [x] CloudWatch Logs + structured logs
   - [x] Structured logging
-  - [ ] CloudWatch Logs
+  - [x] CloudWatch Logs
 - [ ] CloudWatch Metrics + Alarms
 - [ ] S3
 
