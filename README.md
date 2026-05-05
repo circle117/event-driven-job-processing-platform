@@ -38,7 +38,9 @@ Phase 2: basic AWS services
 
 Phase 3: Observability + S3
 
-- [ ] CloudWatch Logs + structured logs
+- [x] CloudWatch Logs + structured logs
+  - [x] Structured logging
+  - [ ] CloudWatch Logs
 - [ ] CloudWatch Metrics + Alarms
 - [ ] S3
 
